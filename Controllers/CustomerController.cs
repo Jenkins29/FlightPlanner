@@ -15,6 +15,7 @@ namespace FlightPlanner.Core.Controllers
     {
         [HttpGet]
         [Route("airports")]
+
         public IActionResult Search(string search)
         {
             AirportRequest[] arr = new AirportRequest[1];
