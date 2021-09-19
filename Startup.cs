@@ -10,6 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FlightPlanner.Core.Authentication;
+using FlightPlanner.Core.Authentication;
+using Microsoft.AspNetCore.Authentication;
 
 namespace FlightPlanner.Core
 {
@@ -29,8 +32,13 @@ namespace FlightPlanner.Core
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FlightPlanner.Core", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FlightPlanner.Web", Version = "v1" });
             });
+
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions,
+                    BasicAuthenticationHandler>(
+                    "BasicAuthentication", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,11 +48,12 @@ namespace FlightPlanner.Core
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlightPlanner.Core v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlightPlanner.Web v1"));
             }
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
