@@ -122,3 +122,4 @@ We can use [Testcontainers](https://www.testcontainers.org/) to test queries aga
 
   - Build is successful
   - External tests are passing in *in-memory* & *database* mode
+
